@@ -1,20 +1,20 @@
 #include "Header.h"
 
-Massive() {
+Massive::Massive() {
     for (int i = 0; i < size; i++){
         elements[i] = "";
     }
 }
 
-string operator[] (int i){
+string Massive::operator[] (int i){
     return elements[i];
 }
 
-bool is_empty(){
+bool Massive::is_empty(){
     return realsize == 0;
 }
 
-void MPrint(){
+void Massive::MPrint(){
     if(is_empty()){
         cout << "Massive is empty" << endl;
         return;
@@ -27,7 +27,7 @@ void MPrint(){
     }
 }
 
-void MPushback(string element){
+void Massive::MPushback(string element){
     realsize++;
     if (realsize >= size) {
         string* new_elements = new string[size*2];
@@ -41,7 +41,7 @@ void MPushback(string element){
     return;   
 }
 
-void MPushind(int ind, string element){
+void Massive::MPushind(int ind, string element){
     if(is_empty()){
         cout << "Massive is empty" << endl;
         return;
@@ -73,7 +73,7 @@ void MPushind(int ind, string element){
     return;        
 }
 
-void MPopind(int ind){
+void Massive::MPopind(int ind){
     if(is_empty()){
         cout << "Massive is empty" << endl;
         return;
@@ -89,7 +89,7 @@ void MPopind(int ind){
     }
 }
 
-void MChange(int ind, string element){
+void Massive::MChange(int ind, string element){
     string* new_elements = new string[size];
     if(is_empty()){
         cout << "Massive is empty" << endl;
@@ -102,7 +102,7 @@ void MChange(int ind, string element){
     elements[ind] = element;
 }
 
-void MGet(int ind){
+void Massive::MGet(int ind){
     if(is_empty()){
         cout << "Massive is empty" << endl;
         return;
@@ -116,11 +116,11 @@ void MGet(int ind){
     cout << elements[ind] << endl;
 }
 
-int Size(){
+int Massive::Size(){
     return size;
 }
 
-void MWrite(string& read, string filename, int ind_start, int end){
+void Massive::MWrite(string& read, string filename, int ind_start, int end){
     ofstream in;
     in.open(filename);
     if (is_empty()){
@@ -141,7 +141,7 @@ void MWrite(string& read, string filename, int ind_start, int end){
     return;
 }
 
-void MRead(string& read, int& ind_start, int& ind){
+void Massive::MRead(string& read, int& ind_start, int& ind){
     for (ind; read[ind] != '{' && ind < read.size(); ind++);
     ind_start = ind;
     ind++;
