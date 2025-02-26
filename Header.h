@@ -60,11 +60,8 @@ public:
 
     void SPOP();
     
-    void printStack();
+    bool printStack();
     
-    void SWrite(string& read, string filename, int ind_start, int end);
-
-    void SRead(string& read, int& ind_start, int& ind);
 };
 
 class LIST_S {
@@ -74,7 +71,7 @@ public:
 
     bool is_empty();
 
-    void LsPRINT();
+    bool LsPRINT();
 
     void LsPUSH_end(string new_data);
 
@@ -86,11 +83,8 @@ public:
 
     void LsPOP_data(string kill_data);
     
-    void LsGET(string get_data);
+    bool LsGET(string get_data);
 
-    void LsWrite(string& read, string filename, int ind_start, int end);
-
-    void LsRead(string& read, int& ind_start, int& ind);
 };
 
 class LIST_d{
@@ -100,7 +94,7 @@ public:
 
     bool is_empty();
 
-    void LdPRINT();
+    bool LdPRINT();
 
     void LdPUSH_end(string new_data);
 
@@ -112,11 +106,7 @@ public:
 
     void LdPOP_data(string kill_data);
 
-    void LdGET(string get_data);
-
-    void LdWrite(string& read, string filename, int ind_start, int end);
-
-    void LdRead(string& read, int& ind_start, int& ind);
+    bool LdGET(string get_data);
 
 };
 
@@ -127,15 +117,11 @@ public:
 
     bool is_empty();
 
-    void QPrint();
+    bool QPrint();
     
     void QPush(string new_data);
 
     void QPop();
-
-    void QWrite(string& read, string filename, int ind_start, int end);
-
-    void QRead(string& read, int& ind_start, int& ind);
 };
 
 class Massive{
@@ -150,7 +136,7 @@ public:
 
     bool is_empty();
 
-    void MPrint();
+    bool MPrint();
 
     void MPushback(string element);
 
@@ -160,13 +146,10 @@ public:
 
     void MChange(int ind, string element);
 
-    void MGet(int ind);
+    string MGet(int ind);
 
     int Size();
-    
-    void MWrite(string& read, string filename, int ind_start, int end);
 
-    void MRead(string& read, int& ind_start, int& ind);
 
 };
 
@@ -177,7 +160,7 @@ public:
 
     Hash ();
     bool is_empty();
-    void HPrint();
+    bool HPrint();
 
     int Htrans (string new_key);
 
@@ -187,9 +170,6 @@ public:
 
     void HPop(string key_s);
 
-    void HWrite(string& read, string filename, int ind_start, int end);
-
-    void HRead(string& read, int& ind_start, int& ind);
 };
 
 class Tree{
@@ -205,7 +185,4 @@ public:
     bool is_full(TNode* current);
     void print_Tree(TNode* root, int level);
 
-    void TWrite(string& read, string filename, int ind_start, int ind, string data);   
-
-    int TRead(string& read, int& ind_start, int& ind);
 };

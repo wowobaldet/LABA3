@@ -4,18 +4,18 @@ bool LIST_d::is_empty(){
     return Lhead == nullptr;
 }
 
-void LIST_d::LdPRINT(){
+bool LIST_d::LdPRINT(){
     LDNode* current = Lhead;
     if (is_empty()){
         cout << "List is empty!" << endl;
-        return;
+        return 0;
     }
     cout << "List output" << endl;
     while (current != nullptr) {
         cout << current->data << endl;
         current = current->next;
     }
-
+    return 1;
 }
 
 void LIST_d::LdPUSH_end(string new_data){
@@ -115,13 +115,13 @@ void LIST_d::LdPOP_data(string kill_data){
 
 }
 
-void LIST_d::LdGET(string get_data){
+bool LIST_d::LdGET(string get_data){
     LDNode* current = Lhead;
     bool is_having = 0;
     int ind = 0;
     if (is_empty()){
         cout << "List is empty!" << endl;
-        return;
+        return 0;
     }
     cout << "Elements with data " << get_data << ":" << endl;
     while (current->next != nullptr){
@@ -138,48 +138,7 @@ void LIST_d::LdGET(string get_data){
     }
     if (is_having == 0){
         cout << "List don't have that" << endl;
-        return;
+        return 0;
     }
-}
-
-void LIST_d::LdWrite(string& read, string filename, int ind_start, int end){
-    ofstream in;
-    in.open(filename);
-    if (is_empty()){
-        cout << "List is empty" << endl;
-        in << read;
-        in.close();
-        return;
-    }
-    LDNode* current = Lhead;
-    while (current != Ltail){
-        read.insert(ind_start+1, '\"' + current->data + '\"' + ';');
-        ind_start += current->data.size() + 3;
-        current = current->next;
-    }
-    read.insert(ind_start+1, '\"' + Ltail->data + '\"');
-    in << read;
-    in.close();
-    return;
-}
-
-void LIST_d::LdRead(string& read, int& ind_start, int& ind){
-    for (ind; read[ind] != '{' && ind < read.size(); ind++);
-    ind_start = ind;
-    ind++;
-    if (read[ind] == '}'){
-        return;
-    }
-    string datas = "";
-    for (ind; read[ind] != '}' && read[ind] != '\n' && ind < read.size(); ind++){
-        for (ind; read[ind] != '\"' && read[ind] != '}' && ind < read.size(); ind++);
-        ind++;
-        for (ind; read[ind] != '\"' && read[ind] != '}' && ind < read.size(); ind++){
-            datas += read[ind];
-        }
-        LdPUSH_end(datas);
-        datas = "";
-    }
-    read.erase(ind_start + 1, ind - ind_start - 1);
-    return;
+    return 1;
 }

@@ -35,8 +35,13 @@ bool Tree::TFind(TNode* current, string find_data){
         return true;
     }
     bool is_here = false;
-    while ((current != nullptr) && (current->right != nullptr && current->left != nullptr)){
-        if (current->left->data == find_data || current->right->data == find_data){
+    while (current != nullptr){
+        if ((current->right == nullptr) && (current->left == nullptr)) break;
+        if (current->left != nullptr && current->left->data == find_data){
+            is_here = true;
+            break;
+        }
+        if (current->right != nullptr && current->right->data == find_data){
             is_here = true;
             break;
         }
@@ -79,43 +84,3 @@ void Tree::print_Tree(TNode* root, int level)
     }
 }
 
-void Tree::TWrite(string& read, string filename, int ind_start, int ind, string data){
-    ofstream in;
-    in.open(filename);
-    if (is_empty()){
-        cout << "List is empty" << endl;
-        in << read;
-        in.close();
-        return;
-    }
-    if (read[ind_start+1] == '}') read.insert(ind_start + 1, '\"' + data + '\"');
-    else {
-        read.insert(ind, '\"' + data + '\"');
-    }
-    in << read;
-    in.close();
-    return;
-}   
-
-int Tree::TRead(string& read, int& ind_start, int& ind){
-    for (ind; read[ind] != '{' && ind < read.size(); ind++);
-    ind_start = ind;
-    ind++;
-    if (read[ind] == '}'){
-        return 0;
-    }
-    int count = 1;
-    string datas = "";
-    for (ind; read[ind] != '}' && read[ind] != '\n' && ind < read.size(); ind++){
-        count++;
-        for (ind; read[ind] != '\"' && read[ind] != '}' && read[ind] != '\n'; ind++) count++;
-        ind++;
-        for (ind; read[ind] != '\"' && read[ind] != '}' && read[ind] != '\n'; ind++){
-            datas += read[ind];
-            count++;
-        }
-        TPush(root, datas);
-        datas = "";
-    }
-    return count;
-}

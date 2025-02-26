@@ -1,6 +1,5 @@
 #include "Header.h"
 
-    Stk::Stk() : head(nullptr) {};
 
     bool Stk::is_empty(){
         return head == nullptr;
@@ -14,12 +13,20 @@
     }
 
     void Stk::SPOP(){
+        if (is_empty()){
+            cout << "Stack is empty" << endl;
+            return;
+        }
         SNode* new_head = head;
         head = head->next;
         delete new_head;
     }
     
-    void Stk::printStack() const {
+    bool Stk::printStack() {
+        if (is_empty()){
+            cout << "Stack is empty" << endl;
+            return 0;
+        }
         SNode* current = head;
         cout << "Stack output:" << endl;
         while (current != nullptr) {
@@ -27,51 +34,6 @@
             current = current->next;
         }
         cout << endl;
+        return 1;
     }
     
-    void Stk::SWrite(string& read, string filename, int ind_start, int end){
-        ofstream in;
-        in.open(filename);
-        if (is_empty()){
-            cout << "Stack is empty" << endl;
-            in << read;
-            in.close();
-            return;
-        }
-        SNode* current = head;
-        while (current->next != nullptr){
-            read.insert(ind_start+1, '\"' + current->data + '\"' + ';' + '\n');
-            ind_start += current->data.size() + 4;
-            current = current->next;
-        }
-        read.insert(ind_start+1, '\"' + current->data + '\"');
-        in << read;
-        in.close();
-        return;
-    }
-
-    void Stk::SRead(string& read, int& ind_start, int& ind){
-        for (ind; read[ind] != '{' && ind < read.size(); ind++);
-        ind_start = ind;
-        ind++;
-        if (read[ind] == '}'){
-            return;
-        }
-        Stk flip;
-        string datas = "";
-        for (ind; read[ind] != '}' && read[ind] != '\n' && ind < read.size(); ind++){
-            for (ind; read[ind] != '\"' && read[ind] != '}' && ind < read.size(); ind++);
-            ind++;
-            for (ind; read[ind] != '\"' && read[ind] != '}' && ind < read.size(); ind++){
-                datas += read[ind];
-            }
-            flip.SPUSH(datas);
-            datas = "";
-        }
-        while(flip.head != nullptr){
-            SPUSH(flip.head->data);
-            flip.head = flip.head->next;
-        }
-        read.erase(ind_start + 1, ind - ind_start - 1);
-        return;
-    }

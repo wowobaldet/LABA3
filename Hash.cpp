@@ -13,11 +13,11 @@ bool Hash::is_empty(){
     }
     return true;
 }
-void Hash::HPrint(){
+bool Hash::HPrint(){
     int ind = 0;
     if (is_empty()){
         cout << "Empty" << endl;
-        return;
+        return 0;
     }
     cout << "Output: " << endl;
     while (ind < size){
@@ -34,6 +34,7 @@ void Hash::HPrint(){
         }
         ind++;
     }
+    return 1;
 }
 
 int Hash::Htrans (string new_key){
@@ -125,55 +126,3 @@ void Hash::HPop(string key_s){
     }
 }
 
-void Hash::HWrite(string& read, string filename, int ind_start, int end){
-    ofstream in;
-    in.open(filename);
-    if (is_empty()){
-        cout << "Hash is empty" << endl;
-        in << read;
-        in.close();
-        return;
-    }
-    int i = 0;
-    while (i < size){
-        if (tabs[i] != nullptr){
-            HNode* current = tabs[i];
-            while(current != nullptr){
-                read.insert(ind_start+1, '(' + current->key + ',' + current->data + ')');
-                ind_start += current->key.size() + current->data.size() + 3;
-                current = current->next;
-            }
-        }
-        i++;
-    }
-    in << read;
-    in.close();
-    return;
-}
-
-void Hash::HRead(string& read, int& ind_start, int& ind){
-    for (ind; read[ind] != '{' && ind < read.size(); ind++);
-    ind_start = ind;
-    ind++;
-    if (read[ind] == '}'){
-        return;
-    }
-    string datas = "";
-    string key = "";
-    for (ind; read[ind] != '}' && read[ind] != '\n' && ind < read.size(); ind++){
-        for (ind; read[ind] != '(' && read[ind] != '}' && ind < read.size(); ind++);
-        ind++;
-        for (ind; read[ind] != ',' && read[ind] != ')' && ind < read.size(); ind++){
-            key += read[ind];
-        }
-        ind++;
-        for (ind; read[ind] != ')' && read[ind] != '}' && ind < read.size(); ind++){
-            datas += read[ind];
-        }
-        HPush(key, datas);
-        datas = "";
-        key = "";
-    }
-    read.erase(ind_start + 1, ind - ind_start - 1);
-    return;
-}

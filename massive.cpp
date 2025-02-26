@@ -14,10 +14,10 @@ bool Massive::is_empty(){
     return realsize == 0;
 }
 
-void Massive::MPrint(){
+bool Massive::MPrint(){
     if(is_empty()){
         cout << "Massive is empty" << endl;
-        return;
+        return 0;
     }
     int i = 0;
     cout << "Massive output:" << endl;
@@ -25,6 +25,7 @@ void Massive::MPrint(){
         cout << elements[i] << endl;
         i++;
     }
+    return 1;
 }
 
 void Massive::MPushback(string element){
@@ -102,62 +103,22 @@ void Massive::MChange(int ind, string element){
     elements[ind] = element;
 }
 
-void Massive::MGet(int ind){
+string Massive::MGet(int ind){
     if(is_empty()){
         cout << "Massive is empty" << endl;
-        return;
+        return "Massive is empty";
     }
     if(ind >= realsize){
         cout << "Index is bigger than massive has" << endl;
-        return;
+        return "Index is bigger than massive has";
     }
     //negative
     cout << "Element with index " << ind << ":" << endl;
     cout << elements[ind] << endl;
+    return elements[ind];
 }
 
 int Massive::Size(){
-    return size;
+    return realsize;
 }
 
-void Massive::MWrite(string& read, string filename, int ind_start, int end){
-    ofstream in;
-    in.open(filename);
-    if (is_empty()){
-        cout << "Massive is empty" << endl;
-        in << read;
-        in.close();
-        return;
-    }
-    int i = 0;
-    while (i < realsize - 1){
-        read.insert(ind_start+1, '\"' + elements[i] + '\"' + ';');
-        ind_start += elements[i].size() + 3;
-        i++;
-    }
-    read.insert(ind_start+1, '\"' + elements[realsize - 1] + '\"');
-    in << read;
-    in.close();
-    return;
-}
-
-void Massive::MRead(string& read, int& ind_start, int& ind){
-    for (ind; read[ind] != '{' && ind < read.size(); ind++);
-    ind_start = ind;
-    ind++;
-    if (read[ind] == '}'){
-        return;
-    }
-    string datas = "";
-    for (ind; read[ind] != '}' && read[ind] != '\n' && ind < read.size(); ind++){
-        for (ind; read[ind] != '\"' && read[ind] != '}' && ind < read.size(); ind++);
-        ind++;
-        for (ind; read[ind] != '\"' && read[ind] != '}' && ind < read.size(); ind++){
-            datas += read[ind];
-        }
-        MPushback(datas);
-        datas = "";
-    }
-    read.erase(ind_start + 1, ind - ind_start - 1);
-    return;
-}

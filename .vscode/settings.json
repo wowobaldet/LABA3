@@ -61,6 +61,9 @@
     "iosfwd": "cpp",
     "type_traits": "cpp",
     "iostream": "cpp",
-    "fstream": "cpp"
+    "fstream": "cpp",
+    "*.ipp": "cpp",
+    "*.tcc": "cpp",
+    "list": "cpp"
   }
 }

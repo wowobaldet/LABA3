@@ -4,18 +4,18 @@ bool LIST_S::is_empty(){
     return Lhead == nullptr;
 }
 
-void LIST_S::LsPRINT(){
+bool LIST_S::LsPRINT(){
     LSNode* current = Lhead;
     if (is_empty()){
         cout << "List is empty!" << endl;
-        return;
+        return 0;
     }
     cout << "List output" << endl;
     while (current != nullptr) {
         cout << current->data << endl;
         current = current->next;
     }
-
+    return 1;
 }
 
 void LIST_S::LsPUSH_end(string new_data){
@@ -89,7 +89,7 @@ void LIST_S::LsPOP_data(string kill_data){
             current = current->next;
         }
     }
-    if (is_empty()){
+    if (is_empty() || current->next == nullptr){
         return;
     }
     while (current->next->next != nullptr){
@@ -103,6 +103,9 @@ void LIST_S::LsPOP_data(string kill_data){
         if (current->next == nullptr){
             break;
         }             
+    }
+    if (is_empty()){
+        return;
     }
     if (current->next == nullptr){
         if (current->data == kill_data){
@@ -121,13 +124,13 @@ void LIST_S::LsPOP_data(string kill_data){
 }
 
 
-void LIST_S::LsGET(string get_data){
+bool LIST_S::LsGET(string get_data){
     LSNode* current = Lhead;
     int ind = 0;
     bool is_having = 0;
     if (is_empty()){
         cout << "List is empty!" << endl;
-        return;
+        return 0;
     }
     cout << "Elements with data " << get_data << ":" << endl;
     while (current->next != nullptr){
@@ -144,47 +147,8 @@ void LIST_S::LsGET(string get_data){
     }
     if (is_having == 0){
         cout << "List don't has them" << endl;
+        return 0;
     }
+    return 1;
 }
 
-void LIST_S::LsWrite(string& read, string filename, int ind_start, int end){
-    ofstream in;
-    in.open(filename);
-    if (is_empty()){
-        cout << "List is empty" << endl;
-        in << read;
-        in.close();
-        return;
-    }
-    LSNode* current = Lhead;
-    while (current->next != nullptr){
-        read.insert(ind_start+1, '\"' + current->data + '\"' + ';');
-        ind_start += current->data.size() + 3;
-        current = current->next;
-    }
-    read.insert(ind_start+1, '\"' + current->data + '\"');
-    in << read;
-    in.close();
-    return;
-}
-
-void LIST_S::LsRead(string& read, int& ind_start, int& ind){
-    for (ind; read[ind] != '{' && ind < read.size(); ind++);
-    ind_start = ind;
-    ind++;
-    if (read[ind] == '}'){
-        return;
-    }
-    string datas = "";
-    for (ind; read[ind] != '}' && read[ind] != '\n' && ind < read.size(); ind++){
-        for (ind; read[ind] != '\"' && read[ind] != '}' && ind < read.size(); ind++);
-        ind++;
-        for (ind; read[ind] != '\"' && read[ind] != '}' && ind < read.size(); ind++){
-            datas += read[ind];
-        }
-        LsPUSH_end(datas);
-        datas = "";
-    }
-    read.erase(ind_start + 1, ind - ind_start - 1);
-    return;
-}
