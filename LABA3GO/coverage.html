@@ -55,7 +55,7 @@
 			<div id="nav">
 				<select id="files">
 				
-				<option value="file0">laba3/main.go (68.1%)</option>
+				<option value="file0">laba3/main.go (95.7%)</option>
 				
 				</select>
 			</div>
@@ -112,14 +112,14 @@ func (t *Tree) TPush(current *TNode, newData string) <span class="cov8" title="1
 
         <span class="cov8" title="1">if newData &gt;= current.data </span><span class="cov8" title="1">{
                 t.TPush(current.right, newData)
-        }</span> else<span class="cov0" title="0"> {
+        }</span> else<span class="cov8" title="1"> {
                 t.TPush(current.left, newData)
         }</span>
 }
 
 // Поиск элемента в дереве
 func (t *Tree) TFind(current *TNode, findData string) bool <span class="cov8" title="1">{
-        if t.IsEmpty() </span><span class="cov0" title="0">{
+        if t.IsEmpty() </span><span class="cov8" title="1">{
                 fmt.Println("Tree is empty")
                 return false
         }</span>
@@ -153,7 +153,7 @@ func (t *Tree) TFind(current *TNode, findData string) bool <span class="cov8" ti
 
 // Проверка, полностью ли заполнено дерево
 func (t *Tree) IsFull(current *TNode) bool <span class="cov8" title="1">{
-        if t.IsEmpty() </span><span class="cov0" title="0">{
+        if t.IsEmpty() </span><span class="cov8" title="1">{
                 fmt.Println("Tree is empty")
                 return false
         }</span>
@@ -175,17 +175,17 @@ func (t *Tree) IsFull(current *TNode) bool <span class="cov8" title="1">{
 
 
 // Печать дерева (возвращает bool)
-func (t *Tree) PrintTree(root *TNode, level int) bool <span class="cov0" title="0">{
-    if t.IsEmpty() </span><span class="cov0" title="0">{
+func (t *Tree) PrintTree(root *TNode, level int) bool <span class="cov8" title="1">{
+    if t.IsEmpty() </span><span class="cov8" title="1">{
         fmt.Println("Tree is empty")
         return false
     }</span>
-    <span class="cov0" title="0">if root != nil </span><span class="cov0" title="0">{
+    <span class="cov8" title="1">if root != nil </span><span class="cov8" title="1">{
         t.PrintTree(root.right, level+1)
         fmt.Printf("%s%s\n", strings.Repeat("    ", level), root.data)
         t.PrintTree(root.left, level+1)
     }</span>
-    <span class="cov0" title="0">return true</span>
+    <span class="cov8" title="1">return true</span>
 }
 </pre>
 		

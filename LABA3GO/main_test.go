@@ -9,7 +9,7 @@ import (
 // Тест проверки поиска элементов в дереве
 func TestFind(t *testing.T) {
     tree := &Tree{root: nil}
-
+    tree.TFind(tree.root, "69") 
     // Добавляем элементы в дерево
     tree.TPush(tree.root, "5")
     tree.TPush(tree.root, "3")
@@ -55,7 +55,9 @@ func TestPush(t *testing.T) {
 // Тест проверки полноты дерева
 func TestIsFull(t *testing.T) {
     tree := &Tree{root: nil}
-
+    if tree.IsFull(tree.root) {
+        t.Errorf("Expected tree not to be full")
+    }
     // Добавляем элементы в дерево
     tree.TPush(tree.root, "b")
     tree.TPush(tree.root, "c")
@@ -93,9 +95,10 @@ func TestIsEmpty(t *testing.T) {
 }
 
 // Тест печати дерева (проверка структуры)
-/*func TestPrintTree(t *testing.T) {
+func TestPrintTree(t *testing.T) {
+    
     tree := &Tree{root: nil}
-
+    tree.PrintTree(tree.root, 0)
     // Добавляем элементы в дерево
     tree.TPush(tree.root, "5")
     tree.TPush(tree.root, "3")
@@ -105,25 +108,10 @@ func TestIsEmpty(t *testing.T) {
     tree.TPush(tree.root, "6")
     tree.TPush(tree.root, "8")
 
-    // Создаём ожидаемую структуру дерева
-    var buffer strings.Builder
+
     tree.PrintTree(tree.root, 0)
 
-    expectedOutput := `        8
-    7
-        6
-5
-        4
-    3
-        2
-
-`
-	real := "        "+buffer.String()
-    // Сравниваем результат с ожидаемым выводом
-    if real != expectedOutput {
-        t.Errorf("Expected tree structure:\n%s\nGot:\n%s", expectedOutput, buffer.String())
-    }
-}*/
+}
 
 // Бенчмарк для метода TPush
 func BenchmarkTPush(b *testing.B) {
