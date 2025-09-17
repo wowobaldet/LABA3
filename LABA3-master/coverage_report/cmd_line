@@ -1,1 +1,1 @@
-genhtml coverage.info --output-directory coverage_report --ignore-errors inconsistent
+genhtml filtered.info --output-directory coverage_report --ignore-errors inconsistent

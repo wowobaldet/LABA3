@@ -185,6 +185,13 @@ BOOST_AUTO_TEST_CASE(test_size) {
     BOOST_CHECK_EQUAL(size,0);
 }
 
+BOOST_AUTO_TEST_CASE(test_empty_get) {
+    Massive mas;
+    mas.MPushind(1, "123");
+    string znach = mas.MGet(1);
+    BOOST_CHECK_EQUAL(znach, "Massive is empty");
+}
+
 // Бенчмарки для массива
 BOOST_AUTO_TEST_CASE(BenchmarkMassivePushBack) {
     Massive mas;
@@ -206,6 +213,7 @@ BOOST_AUTO_TEST_CASE(BenchmarkMassivePopIndex) {
         }
     });
 }
+
 
 // Тесты для хэш-таблицы
 
@@ -240,6 +248,11 @@ BOOST_AUTO_TEST_CASE(test_update_value) {
     hash.HPush("G", "420");
     val=hash.HGet("G");
     BOOST_CHECK_EQUAL(val, "420");
+    hash.HPush("aaaaaaa", "value1");
+    hash.HPush("xxxxxxx", "value2");
+    hash.HPush("aaaaaaa", "123");
+    val=hash.HGet("aaaaaaa");
+    BOOST_CHECK_EQUAL(val, "123");
 }
 
 BOOST_AUTO_TEST_CASE(test_remove) {
@@ -263,6 +276,14 @@ BOOST_AUTO_TEST_CASE(test_remove) {
     hash.HPush("G", "value3");
     hash.HPop("G");
     val=hash.HGet("G");
+    BOOST_CHECK_EQUAL(val, "");
+    hash.HPush("aaaaaaa", "value1");
+    hash.HPush("xxxxxxx", "value2");
+    hash.HPop("aaaaaaa");
+    val = hash.HGet("aaaaaaa");
+    BOOST_CHECK_EQUAL(val, "");
+    hash.HPop("aaaaaaa");
+    val = hash.HGet("aaaaaaa");
     BOOST_CHECK_EQUAL(val, "");
 
 }
@@ -398,7 +419,9 @@ BOOST_AUTO_TEST_CASE(test_pop_end) {
 }
 
 BOOST_AUTO_TEST_CASE(test_pop_znach) {
-     LIST_S list{nullptr};
+    LIST_S list{nullptr};
+    list.LsPOP_data("123");
+    BOOST_REQUIRE_EQUAL(list.LsGET("123"),false);
     list.LsPUSH_end("B");
     list.LsPUSH_end("C");
     list.LsPUSH_front("A");
@@ -411,12 +434,18 @@ BOOST_AUTO_TEST_CASE(test_pop_znach) {
     BOOST_REQUIRE_EQUAL(list.LsGET("C"),true);
     BOOST_REQUIRE_EQUAL(!list.LsGET("A"),true);
      list.LsPOP_data("R");
+    list.LsPUSH_end("B");
+    list.LsPUSH_end("C");
+    list.LsPUSH_end("A");
+    list.LsPOP_data("A");
+    BOOST_REQUIRE_EQUAL(!list.LsGET("A"),true);
 }
 
 BOOST_AUTO_TEST_CASE(test_empty_list) {
    LIST_S list{nullptr};
     BOOST_REQUIRE_EQUAL(!list.LsGET("A"),true); 
 }
+
 // Бенчмарки для односвязного списка
 BOOST_AUTO_TEST_CASE(BenchmarkListPushPop) {
     LIST_S list{nullptr};
